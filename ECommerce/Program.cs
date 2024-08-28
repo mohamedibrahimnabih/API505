@@ -12,6 +12,15 @@ namespace ECommerce
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: "_myAllowSpecificOrigins",
+                                  policy =>
+                                  {
+                                      policy.AllowAnyOrigin();
+                                  });
+            });
+
             // Add services to the container.
 
             builder.Services.AddControllers();
@@ -36,6 +45,8 @@ namespace ECommerce
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors("_myAllowSpecificOrigins");
 
             app.UseAuthorization();
 
